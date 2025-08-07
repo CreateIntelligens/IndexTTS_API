@@ -31,6 +31,15 @@ RUN pip install -e .
 # 複製其他專案檔案
 COPY . .
 
+# 設定CUDA環境變數
+ENV CUDA_HOME=/usr/local/cuda
+ENV CUDA_PATH=/usr/local/cuda
+ENV PATH=${CUDA_HOME}/bin:${PATH}
+ENV LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
+
+# 重新編譯CUDA kernel以獲得更好的性能
+RUN pip install -e . --no-deps --no-build-isolation || echo "CUDA kernel compilation failed, will use fallback"
+
 # 創建必要的目錄
 RUN mkdir -p checkpoints outputs
 

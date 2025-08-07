@@ -52,7 +52,7 @@ class TTSRequest(BaseModel):
 @app.post("/tts")
 async def synthesize(
     prompt_audio: UploadFile = File(..., description="參考音頻檔案"),
-    text: str = Form(..., example="歡迎使用語音合成介面"),
+    text: str = Form(..., examples=["歡迎使用語音合成介面"]),
     infer_mode: str = Form("普通推理"),
     max_text_tokens_per_sentence: int = Form(120),
     sentences_bucket_max_size: int = Form(4),

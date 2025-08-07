@@ -63,8 +63,14 @@ def main():
         print("請確保網路連接正常，或手動下載模型檔案")
         sys.exit(1)
     
+    # 重新編譯CUDA kernel以獲得更好的性能
+    print("\n6. 重新編譯CUDA kernel...")
+    if not run_command("pip install -e . --no-deps --no-build-isolation"):
+        print("警告: CUDA kernel編譯失敗，將使用fallback模式")
+        print("這不影響基本功能，但可能影響性能")
+    
     # 檢查模型檔案
-    print("\n6. 檢查模型檔案...")
+    print("\n7. 檢查模型檔案...")
     required_files = [
         "checkpoints/config.yaml",
         "checkpoints/gpt.pth",
